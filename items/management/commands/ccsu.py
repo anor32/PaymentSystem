@@ -9,11 +9,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         admin_user = User.objects.create(
             email="admin@web.top",
-            first_name="Andrei",
-            last_name="Nikanov",
             role='admin',
-            phone='+89999999',
-            address='Улица пушкина дом колотушкина',
             is_staff=True,
             is_superuser=True,
             is_active=True,
@@ -25,14 +21,11 @@ class Command(BaseCommand):
 
         moderator = User.objects.create(
             email="moder@web.top",
-            first_name="Moder",
-            last_name="Moderatorov",
             role='moderator',
-            phone='+89999999',
-            address='Улица пушкина дом колотушкина',
             is_staff=True,
             is_superuser=False,
             is_active=True,
+
 
         )
 
@@ -42,12 +35,7 @@ class Command(BaseCommand):
 
         user = User.objects.create(
             email="user@web.top",
-            first_name="user",
-            last_name="userov",
             role='user',
-            phone='+89999999',
-            address='Улица пушкина дом колотушкина',
-
             is_staff=False,
             is_superuser=False,
             is_active=True,
