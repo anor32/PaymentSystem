@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'payments',
+    'items',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -71,7 +72,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
-
+AUTH_USER_MODEL = 'users.User'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
@@ -134,3 +135,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+stripe_api_key = os.getenv('STRIPE_API_KEY')
