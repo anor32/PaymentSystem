@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
-
+import os
 from pathlib import Path
+
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -72,12 +74,27 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+load_dotenv()
+DATABASE =os.getenv('POSTGRESQL_DATABASE')
+USER = os.getenv('POSTGRESQL_USER')
+PASSWORD = os.getenv('POSTGRESQL_PASSWORD')
+PORT = os.getenv('POSTGRESQL_PORT')
+doker_host = os.getenv('POSTGRESQL_HOST_DOCKER')
+PAD_DATABASE = os.getenv('POSTGRESQL_PAD_DATABASE')
+HOST = os.getenv('POSTGRESQL_HOST')
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+   'default': {
+       'ENGINE': 'django.db.backends.postgresql',
+        'NAME': DATABASE,
+        'USER': USER,
+        'PASSWORD':PASSWORD,
+
+        'HOST':HOST,
+        'PORT':PORT,
+
     }
 }
+
 
 
 # Password validation
