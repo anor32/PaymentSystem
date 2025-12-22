@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 import os
 from pathlib import Path
 
+import stripe
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -137,3 +138,4 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 stripe_api_key = os.getenv('STRIPE_API_KEY')
+stripe.api_key = stripe_api_key
