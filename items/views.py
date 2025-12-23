@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.views import View
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, ListView
 import stripe
 from items.models import Item
 
@@ -9,6 +9,11 @@ from items.models import Item
 # Create your views here.
 
 class ItemView(DetailView):
+    model = Item
+    template_name = 'item.html'
+
+
+class ItemsView(ListView):
     model = Item
     template_name = 'items.html'
 
