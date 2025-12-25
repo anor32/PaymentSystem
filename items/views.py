@@ -4,6 +4,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.views.generic import CreateView, DetailView, ListView
 import stripe
+
+from config.settings import USD_KEY, EUR_KEY
 from items.models import Item, Order, OrderItem
 
 
@@ -29,6 +31,11 @@ class BuyView(View):
 
         for order_item in order.items:
             print('запрос')
+            if order_item.item.currency=='USD':
+                stripe.api_key = USD_KEY
+            else:
+                stripe.api_key = EUR_KEY
+
             product = stripe.Product.create(
                 name=order_item.item.name,
                 default_price_data={"unit_amount": int(order_item.item.price), "currency": order_item.item.currency},
