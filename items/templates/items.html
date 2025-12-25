@@ -1,16 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{%extends 'home.html' %}
+{% block content %}
 
-</body>
-</html>
 <div style="display: flex">
 {%  for object in object_list %}
        {% include 'items/includes/item.html' with object=object %}
 
 {%endfor%}
 </div>
+<form action="{% url 'items:cart' %}" method="get">
+       <button type="submit">Перейти к корзине</button>
+</form>
+{% endblock %}
+
