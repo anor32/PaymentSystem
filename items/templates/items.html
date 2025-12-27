@@ -7,8 +7,11 @@
 
 {%endfor%}
 </div>
+{% if request.session.order_id%}
+
 <form action="{% url 'items:cart' %}" method="get">
-       <button type="submit">Перейти к корзине</button>
+       <button  type="submit">Перейти к корзине</button>
 </form>
+        {% endif %}
 {% endblock %}
 
