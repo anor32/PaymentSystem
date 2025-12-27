@@ -1,11 +1,13 @@
+import os
+from urllib.request import HTTPRedirectHandler
 
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.views.generic import CreateView, DetailView, ListView
 import stripe
 
-from config.settings import USD_KEY, EUR_KEY
+from config.settings import USD_KEY, EUR_KEY, stripe_public
 from items.models import Item, Order, OrderItem
 from items.utils import check_discounts_and_tax
 
@@ -29,11 +31,10 @@ class BuyView(View):
         order = get_object_or_404(Order, pk=pk)
         prices = []
 
-        coupon_obj, tax_rate_id =check_discounts_and_tax(order)
-
+        coupon_obj, tax_rate_id = check_discounts_and_tax(order)
         try:
             for order_item in order.items:
-                print('запрос')
+
                 if order_item.item.currency=='USD':
                     stripe.api_key = USD_KEY
                 else:
@@ -57,7 +58,7 @@ class BuyView(View):
 
             )
         except stripe.StripeError as e:
-            print("разная валюта в заказе",e)
+            print("Ошибка в страйп",e)
             return JsonResponse({'error': "Ошибка в страйп"}, status=400)
 
         return JsonResponse({'session': session})
@@ -68,7 +69,18 @@ class CartView(View):
     def get(self, request,  pk=None):
         order_pk = self.request.session['order_id']
         order = get_object_or_404(Order, pk=order_pk)
-        return render(request, 'cart.html', {'order': order,'items': order.items})
+        return render(request, 'cart.html', {'order': order,'items': order.items,'stripe_public_key':stripe_public})
+
+    def delete(self, request, pk=None):
+        order_pk = self.request.session['order_id']
+        order = get_object_or_404(Order, pk=order_pk)
+        order_products = OrderItem.objects.filter(order=order)
+        for order_product in order_products:
+            order_product.delete()
+
+
+        return HttpResponse(status=200)
+
 
 class OrderView(View):
     model = Order
