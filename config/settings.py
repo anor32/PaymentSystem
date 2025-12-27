@@ -140,6 +140,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+stripe_public = os.getenv('STRIPE_PUBLIC_KEY')
 USD_KEY = os.getenv('STRIPE_API_KEY_USD')
 EUR_KEY = os.getenv('STRIPE_API_KEY_EUR')
 stripe_api_key = USD_KEY
