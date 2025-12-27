@@ -7,6 +7,7 @@ import stripe
 
 from config.settings import USD_KEY, EUR_KEY
 from items.models import Item, Order, OrderItem
+from items.utils import check_discounts_and_tax
 
 
 # Create your views here.
@@ -22,32 +23,42 @@ class ItemsView(ListView):
 
 
 class BuyView(View):
-    model = Order
     template_name = 'success_page.html'
-
+    model = Order
     def get(self, request, pk):
         order = get_object_or_404(Order, pk=pk)
         prices = []
 
-        for order_item in order.items:
-            print('запрос')
-            if order_item.item.currency=='USD':
-                stripe.api_key = USD_KEY
-            else:
-                stripe.api_key = EUR_KEY
+        coupon_obj, tax_rate_id =check_discounts_and_tax(order)
 
-            product = stripe.Product.create(
-                name=order_item.item.name,
-                default_price_data={"unit_amount": int(order_item.item.price), "currency": order_item.item.currency},
-                expand=["default_price"],
+        try:
+            for order_item in order.items:
+                print('запрос')
+                if order_item.item.currency=='USD':
+                    stripe.api_key = USD_KEY
+                else:
+                    stripe.api_key = EUR_KEY
+
+                product = stripe.Product.create(
+                    name=order_item.item.name,
+                    default_price_data={"unit_amount": int(order_item.item.price), "currency": order_item.item.currency},
+                    expand=["default_price"],
+
+                )
+                prices.append({'price': product.default_price.id, 'quantity': order_item.quantity,'tax_rates':tax_rate_id})
+
+            session = stripe.checkout.Session.create(
+                success_url="http://localhost:8000/success_page.html",
+                line_items=prices,
+                mode="payment",
+                discounts=coupon_obj,
+
+
+
             )
-            prices.append({'price': product.default_price.id, 'quantity': order_item.quantity})
-
-        session = stripe.checkout.Session.create(
-            success_url="http://localhost:8000/success_page.html",
-            line_items=prices,
-            mode="payment",
-        )
+        except stripe.StripeError as e:
+            print("разная валюта в заказе",e)
+            return JsonResponse({'error': "Ошибка в страйп"}, status=400)
 
         return JsonResponse({'session': session})
 
