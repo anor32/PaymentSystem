@@ -1,0 +1,64 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: PaymentSystemDB
+
+    environment:
+        POSTGRES_USER: ${POSTGRESQL_USER}
+        POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD}
+        POSTGRES_DB: ${POSTGRESQL_DATABASE}
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRESQL_USER} -d ${POSTGRESQL_DATABASE}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    networks:
+      - app_network
+  app:
+
+    build: .
+    tty: true
+    image: payment
+    container_name: PaymentService
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    environment:
+        POSTGRESQL_USER: ${POSTGRESQL_USER}
+        POSTGRESQL_PASSWORD: ${POSTGRESQL_PASSWORD}
+        POSTGRESQL_DATABASE: ${POSTGRESQL_DATABASE}
+        POSTGRESQL_PORT: ${POSTGRESQL_PORT}
+        POSTGRESQL_HOST: postgres
+
+
+
+
+    command: >
+     
+      bash -c "python manage.py makemigrations &&
+      python manage.py migrate &&
+      python manage.py loaddata fixtures/payments.json &&
+      python manage.py loaddata fixtures/users.json &&
+
+      python manage.py runserver 0.0.0.0:8000 "
+      
+
+    ports:
+      - '127.0.0.1:8000:8000'
+    networks:
+      - app_network
+
+
+volumes:
+  postgres_data:
+
+networks:
+  app_network:
+    driver: bridge
