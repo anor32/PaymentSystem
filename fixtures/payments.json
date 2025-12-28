@@ -1,0 +1,234 @@
+[
+    {
+        "model": "items.item",
+        "pk": 1,
+        "fields": {
+            "name": "Молоко",
+            "description": "Молоко вкусное",
+            "price": 324.0
+        }
+    },
+    {
+        "model": "items.item",
+        "pk": 2,
+        "fields": {
+            "name": "Йогурт греческий Зелёная Линия",
+            "description": "вкусно и полезно и недорого",
+            "price": 34.0
+        }
+    },
+    {
+        "model": "items.item",
+        "pk": 3,
+        "fields": {
+            "name": "Хлеб",
+            "description": "ржаной изготовлен в россии",
+            "price": 56.0
+        }
+    },
+    {
+        "model": "items.item",
+        "pk": 4,
+        "fields": {
+            "name": "Чипсы принглс",
+            "description": "оригинальная упаковка со вкусом сметаны и лука",
+            "price": 160.0
+        }
+    },
+    {
+        "model": "items.orderitem",
+        "pk": 129,
+        "fields": {
+            "order": 75,
+            "item": 1,
+            "quantity": 5,
+            "currency": "USD"
+        }
+    },
+    {
+        "model": "items.orderitem",
+        "pk": 130,
+        "fields": {
+            "order": 75,
+            "item": 2,
+            "quantity": 9,
+            "currency": "USD"
+        }
+    },
+    {
+        "model": "items.orderitem",
+        "pk": 131,
+        "fields": {
+            "order": 75,
+            "item": 3,
+            "quantity": 9,
+            "currency": "USD"
+        }
+    },
+    {
+        "model": "items.orderitem",
+        "pk": 132,
+        "fields": {
+            "order": 75,
+            "item": 4,
+            "quantity": 3,
+            "currency": "USD"
+        }
+    },
+    {
+        "model": "items.orderitem",
+        "pk": 133,
+        "fields": {
+            "order": 76,
+            "item": 2,
+            "quantity": 1,
+            "currency": "USD"
+        }
+    },
+    {
+        "model": "items.orderitem",
+        "pk": 134,
+        "fields": {
+            "order": 77,
+            "item": 2,
+            "quantity": 1,
+            "currency": "USD"
+        }
+    },
+    {
+        "model": "items.orderitem",
+        "pk": 135,
+        "fields": {
+            "order": 77,
+            "item": 3,
+            "quantity": 2,
+            "currency": "USD"
+        }
+    },
+    {
+        "model": "items.orderitem",
+        "pk": 136,
+        "fields": {
+            "order": 77,
+            "item": 4,
+            "quantity": 2,
+            "currency": "USD"
+        }
+    },
+    {
+        "model": "items.orderitem",
+        "pk": 137,
+        "fields": {
+            "order": 78,
+            "item": 2,
+            "quantity": 1,
+            "currency": "USD"
+        }
+    },
+    {
+        "model": "items.orderitem",
+        "pk": 138,
+        "fields": {
+            "order": 78,
+            "item": 3,
+            "quantity": 2,
+            "currency": "USD"
+        }
+    },
+    {
+        "model": "items.orderitem",
+        "pk": 139,
+        "fields": {
+            "order": 79,
+            "item": 2,
+            "quantity": 2,
+            "currency": "USD"
+        }
+    },
+    {
+        "model": "items.order",
+        "pk": 74,
+        "fields": {
+            "user": 1,
+            "status": "Ожидает оплаты",
+            "tax": null,
+            "discount": null
+        }
+    },
+    {
+        "model": "items.order",
+        "pk": 75,
+        "fields": {
+            "user": 1,
+            "status": "Ожидает оплаты",
+            "tax": null,
+            "discount": null
+        }
+    },
+    {
+        "model": "items.order",
+        "pk": 76,
+        "fields": {
+            "user": 1,
+            "status": "Ожидает оплаты",
+            "tax": null,
+            "discount": null
+        }
+    },
+    {
+        "model": "items.order",
+        "pk": 77,
+        "fields": {
+            "user": 1,
+            "status": "Ожидает оплаты",
+            "tax": null,
+            "discount": null
+        }
+    },
+    {
+        "model": "items.order",
+        "pk": 78,
+        "fields": {
+            "user": 1,
+            "status": "Ожидает оплаты",
+            "tax": null,
+            "discount": null
+        }
+    },
+    {
+        "model": "items.order",
+        "pk": 79,
+        "fields": {
+            "user": 1,
+            "status": "Ожидает оплаты",
+            "tax": null,
+            "discount": null
+        }
+    },
+    {
+        "model": "items.order",
+        "pk": 80,
+        "fields": {
+            "user": 1,
+            "status": "Ожидает оплаты",
+            "tax": null,
+            "discount": null
+        }
+    },
+    {
+        "model": "items.discount",
+        "pk": 1,
+        "fields": {
+            "name": "промокод",
+            "percent": 34.0
+        }
+    },
+    {
+        "model": "items.tax",
+        "pk": 3,
+        "fields": {
+            "name": "НДС",
+            "percent": 10.0
+        }
+    }
+]
