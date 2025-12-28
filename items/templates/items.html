@@ -9,9 +9,23 @@
 </div>
 {% if request.session.order_id%}
 
-<form action="{% url 'items:cart' %}" method="get">
+<form action="{% url 'items:cart' %}" style="display: none" id="to_cart" method="get">
        <button  type="submit">Перейти к корзине</button>
 </form>
         {% endif %}
+
+<script defer>
+
+const buttons = document.querySelectorAll('[id^="add_to_cart"]');
+
+buttons.forEach(button => {
+    button.addEventListener('click', function () {
+        const toCartElement = document.getElementById('to_cart');
+        toCartElement.style.display = 'block';
+    });
+})
+</script>
+
+
 {% endblock %}
 
