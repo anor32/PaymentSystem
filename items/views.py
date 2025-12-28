@@ -24,7 +24,8 @@ class ItemsView(ListView):
 class ChangeCurrency(FormView):
 
     def post(self, request, *args, **kwargs):
-        print('here')
+        """обрабатывает пост запрос для смены валюты  изменяет валюту принимает request """
+
         order_pk = self.request.session.get('order_id')
         order = get_object_or_404(Order.objects.prefetch_related('order_items'), pk=order_pk)
         order_products = order.order_items.all()
@@ -46,6 +47,7 @@ class BuyView(View):
     model = Order
 
     def get(self, request, pk):
+        """обрабатывает гет запрос иниицирует покупку предмета создает сессию stripe возвращает json для редиректа на платежную форму"""
         order = get_object_or_404(Order, pk=pk)
         prices = []
 
@@ -79,12 +81,14 @@ class BuyView(View):
 class CartView(View):
     template_name = 'cart.html'
 
-    def get(self, request, pk=None):
+    def get(self, request):
+        """отоброжает корзину товаров  возвращает шаблон с контекстом товаров  для отображения принимает request и pk заказа """
         order_pk = self.request.session['order_id']
         order = get_object_or_404(Order, pk=order_pk)
         return render(request, 'cart.html', {'order': order, 'items': order.items, 'stripe_public_key': stripe_public})
 
-    def delete(self, request, pk=None):
+    def delete(self, request ):
+        """очищает корзину удаляет все предеметы из заказа принимает request"""
         order_pk = self.request.session['order_id']
         order = get_object_or_404(Order.objects.prefetch_related('order_items'), pk=order_pk)
         order_products = order.order_items.all()
@@ -98,10 +102,11 @@ class OrderView(View):
     model = Order
     template_name = 'cart.html'
 
-    def get(self, request, pk):
+    def get(self, request):
         return redirect('/items/cart')
 
     def post(self, request, pk):
+        """создает заказ добавляет в сессию id заказа  вовзвращает order_id принимает request и  pk товара"""
         if self.request.session.get('order_id'):
             return JsonResponse({'order_id': None})
         item = get_object_or_404(Item, pk=pk)
@@ -111,6 +116,7 @@ class OrderView(View):
         return JsonResponse({'order_id': order.pk})
 
     def put(self, request, pk):
+        """если заказ уже создан обрабатывает метод put обновляет содержимое заказа добавляет новые товары в заказ принимает request и pk товара"""
         item = get_object_or_404(Item, pk=pk)
         order_id = request.session.get('order_id')
         order = Order.objects.get(pk=order_id)

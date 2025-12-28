@@ -1,8 +1,4 @@
 from django.db import models
-from django.db.models.expressions import result
-from django.forms import ModelChoiceField
-from django.utils.regex_helper import Choice
-
 from users.models import User
 
 
@@ -50,9 +46,7 @@ class Order(models.Model):
     @property
     def total_price(self):
         items_sum = sum([order_item.total_price for order_item in self.items.all()])
-
         total_price = items_sum
-
         if self.discount:
             total_price -= total_price * self.discount.percent / 100
 
@@ -60,6 +54,7 @@ class Order(models.Model):
             total_price += total_price * self.tax.percent / 100
 
         return total_price
+
     @property
     def items(self):
         return OrderItem.objects.filter(order=self)

@@ -2,6 +2,8 @@ import stripe
 
 
 def check_discounts_and_tax(order):
+    """проверяет существует ли скидка и налог у заказа принимает заказ
+     если существует создает в stripe id возвращает созданный обьект в stripe"""
     coupon = []
     tax_percent = []
     if order.tax:
