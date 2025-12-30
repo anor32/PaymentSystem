@@ -3,4 +3,4 @@ python manage.py makemigrations
 python manage.py migrate
 python manage.py loaddata fixtures/payments.json
 python manage.py loaddata fixtures/users.json
-python manage.py runserver 0.0.0.0:8000
+exec gunicorn myapp.wsgi:application --bind 0.0.0.0:10000

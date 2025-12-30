@@ -9,9 +9,9 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
+RUN chmod +x /code/entrypoint.sh
 
 
-
-EXPOSE 8000
+EXPOSE  10000
 
 CMD ["/code/entrypoint.sh"]
