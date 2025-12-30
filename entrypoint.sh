@@ -10,4 +10,4 @@ python manage.py loaddata fixtures/users.json
 
 python manage.py collectstatic --noinput
 
-exec gunicorn your_project.wsgi:application --bind 0.0.0.0:10000
+exec gunicorn config.wsgi:application --bind 0.0.0.0:10000
