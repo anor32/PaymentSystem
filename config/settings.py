@@ -23,7 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-whp(xm#ps!#r7j#6^s1#-va-soz%d&g3whi$vrwe8+_191hn+y'
+
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -139,7 +140,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = '/code/staticfiles'
+
+
+
+
 stripe_public = os.getenv('STRIPE_PUBLIC_KEY')
 USD_KEY = os.getenv('STRIPE_API_KEY_USD')
 EUR_KEY = os.getenv('STRIPE_API_KEY_EUR')
