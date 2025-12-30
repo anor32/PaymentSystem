@@ -10,7 +10,7 @@ RUN pip install -r requirements.txt
 COPY . .
 
 RUN chmod +x /code/entrypoint.sh
-
+RUN python manage.py collectstatic --noinput
 
 EXPOSE  10000
 
